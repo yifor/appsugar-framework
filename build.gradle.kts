@@ -1,14 +1,17 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
     val repos by extra { listOf("http://maven.aliyun.com/nexus/content/groups/public", "https://jcenter.bintray.com/") }
-    extra["kotlin.version"] = "1.3.50"
     repositories {
         for (u in repos) {
             maven(u)
         }
     }
+}
+
+object Version {
+    const val kotlinVersion = "1.3.50"
+    const val coroutineVersion = "1.3.1"
 }
 
 plugins {
@@ -24,6 +27,7 @@ plugins {
 val repos: List<String> by extra
 
 configure(allprojects) {
+    extra["kotlin.version"] = Version.kotlinVersion
     apply {
         plugin("io.spring.dependency-management")
         plugin("org.jetbrains.kotlin.jvm")
@@ -31,8 +35,14 @@ configure(allprojects) {
         plugin("maven-publish")
         plugin("idea")
     }
-    repositories { for (u in repos) { maven(u) } }
+    repositories {
+        for (u in repos) {
+            maven(u)
+        }
+    }
     dependencies {
+        implementation("org.springframework:spring-context:5.1.9.RELEASE")
+        implementation("org.springframework.boot:spring-boot-autoconfigure:2.1.8.RELEASE")
         testCompile("ch.qos.logback:logback-classic:1.2.3")
         testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
@@ -83,8 +93,10 @@ configure(allprojects) {
     rootProject.tasks.findByName("afterReleaseBuild")?.apply { dependsOn("publish") }
 }
 
-project(":appsugar-framework-netty"){
-    dependencies{
+project(":appsugar-framework-netty") {
+    dependencies {
+        implementation(kotlin("stdlib-jdk8"))
         implementation("io.netty:netty-all:4.1.39.Final")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutineVersion}")
     }
 }
