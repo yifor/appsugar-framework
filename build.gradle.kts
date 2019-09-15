@@ -10,6 +10,7 @@ buildscript {
 }
 
 object Version {
+    const val fstVersion = "2.57"
     const val kotlinVersion = "1.3.50"
     const val coroutineVersion = "1.3.1"
 }
@@ -41,6 +42,8 @@ configure(allprojects) {
         }
     }
     dependencies {
+        implementation(kotlin("stdlib-jdk8"))
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutineVersion}")
         implementation("org.springframework:spring-context:5.1.9.RELEASE")
         implementation("org.springframework.boot:spring-boot-autoconfigure:2.1.8.RELEASE")
         testCompile("ch.qos.logback:logback-classic:1.2.3")
@@ -95,8 +98,13 @@ configure(allprojects) {
 
 project(":appsugar-framework-netty") {
     dependencies {
-        implementation(kotlin("stdlib-jdk8"))
         implementation("io.netty:netty-all:4.1.39.Final")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Version.coroutineVersion}")
+    }
+}
+
+project(":appsugar-framework-serializable") {
+    dependencies {
+        implementation("de.ruedigermoeller:fst:${Version.fstVersion}")
+        implementation("org.springframework.data:spring-data-redis:2.1.10.RELEASE")
     }
 }

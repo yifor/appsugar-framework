@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass(EventLoopGroup.class)
 @ConditionalOnProperty(prefix = "spring.appsugar.framework.netty", name = "enabled", matchIfMissing = true)
-public class NettyConfiguration {
+public class NettyAutoConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
