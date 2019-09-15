@@ -1,0 +1,1 @@
+nettyNF=org.appsugar.framework.dubbo.remote.NativeFirstNettyTransporter

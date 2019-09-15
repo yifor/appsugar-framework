@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @ConditionalOnProperty(prefix = "spring.appsugar.framework.serializable", name = "enabled", matchIfMissing = true)
 @Configuration
-public class SerializableAutoConfiguration {
+public class AppsugarSerializableAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean

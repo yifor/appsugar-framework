@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.appsugar.framework.netty.spring.NettyAutoConfiguration
+org.appsugar.framework.netty.spring.AppsugarNettyAutoConfiguration

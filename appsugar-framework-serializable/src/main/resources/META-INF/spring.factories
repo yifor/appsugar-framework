@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.appsugar.framework.serializable.spring.SerializableAutoConfiguration
+org.appsugar.framework.serializable.spring.AppsugarSerializableAutoConfiguration

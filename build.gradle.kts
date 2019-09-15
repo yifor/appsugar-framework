@@ -108,3 +108,10 @@ project(":appsugar-framework-serializable") {
         implementation("org.springframework.data:spring-data-redis:2.1.10.RELEASE")
     }
 }
+
+project(":appsugar-framework-dubbo") {
+    dependencies {
+        api(project(":appsugar-framework-netty"))
+        implementation("org.apache.dubbo:dubbo-spring-boot-starter:2.7.3")
+    }
+}

@@ -1,8 +1,11 @@
 package org.appsugar.framework.netty.spring;
 
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.socket.ServerSocketChannel;
+import io.netty.channel.socket.SocketChannel;
 import org.appsugar.framework.netty.FastThreadFactory;
 import org.appsugar.framework.netty.NativeFirstEventLoopGroup;
+import org.appsugar.framework.netty.NettyNativeFirstEventLoopGroupDetector;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -12,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass(EventLoopGroup.class)
 @ConditionalOnProperty(prefix = "spring.appsugar.framework.netty", name = "enabled", matchIfMissing = true)
-public class NettyAutoConfiguration {
+public class AppsugarNettyAutoConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
@@ -25,8 +28,19 @@ public class NettyAutoConfiguration {
 
     @ConditionalOnMissingBean
     @Bean
-    public EventLoopGroup globalEventLoopGroup(NettyEventLoopGroupResource resource) {
+    public NativeFirstEventLoopGroup globalEventLoopGroup(NettyEventLoopGroupResource resource) {
         return new NativeFirstEventLoopGroup(resource.threadCount, resource.thredFactory);
     }
 
+    @ConditionalOnMissingBean
+    @Bean
+    public Class<ServerSocketChannel> globalServerSocketChannelClass() {
+        return (Class<ServerSocketChannel>) NettyNativeFirstEventLoopGroupDetector.nativeFirstServerSocketChannelClass;
+    }
+
+    @ConditionalOnMissingBean
+    @Bean
+    public Class<SocketChannel> globalSocketChannelClass() {
+        return (Class<SocketChannel>) NettyNativeFirstEventLoopGroupDetector.nativeFirstSocketChannelClass;
+    }
 }
