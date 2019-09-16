@@ -3,6 +3,7 @@ package org.appsugar.framework.dubbo.remote;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
 import org.apache.dubbo.common.URL;
@@ -37,9 +38,9 @@ public class NativeFirstNettyServer extends NettyServer {
                 .childOption(ChannelOption.TCP_NODELAY, Boolean.TRUE)
                 .childOption(ChannelOption.SO_REUSEADDR, Boolean.TRUE)
                 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                .childHandler(new ChannelInitializer<NioSocketChannel>() {
+                .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
-                    protected void initChannel(NioSocketChannel ch) throws Exception {
+                    protected void initChannel(SocketChannel ch) {
                         int idleTimeout = UrlUtils.getIdleTimeout(getUrl());
                         NettyCodecAdapter adapter = new NettyCodecAdapter(getCodec(), getUrl(), NativeFirstNettyServer.this);
                         ch.pipeline()//.addLast("logging",new LoggingHandler(LogLevel.INFO))//for debug
